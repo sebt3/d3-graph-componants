@@ -1,0 +1,17 @@
+{
+    "name": "sebt3/d3-d3-graph-componants",
+    "description": "Some graphics componants based on d3 I use in some projects",
+  "keywords": [
+    "js",
+    "d3"
+  ],
+  "homepage": "https://sebt3.github.io/d3-graph-componants/documentation.html",
+  "authors": [
+    {
+      "name": "Sébastien Huss",
+      "email": "sebastien.huss@gmail.com"
+    } ],
+  "license": "BSD",
+    "require": {
+    }
+}
