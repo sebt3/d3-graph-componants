@@ -417,7 +417,7 @@ dgc.area.gfxLegend = function() {
 	chart.prop = function(_) {if (!arguments.length) return prop;prop=_;return chart;}
 	chart.dispatch.register("area", "enable", "select");
 	chart.setValue	= function(d,v) {
-		chart.root().select('#value_'+d).html(repo.api.format.number(v))
+		chart.root().select('#value_'+d).html(dgc.core.format.number(v))
 		return chart;
 	}
 	chart.setValues	= function(v) {
@@ -446,10 +446,10 @@ dgc.area.gfxLegend = function() {
 	chart.colColor	= function(c) {
 		return chart.color()(c)
 	};
-	chart.dispatch.on("dataUpdate.repoGfxLegend", function() { 
+	chart.dispatch.on("dataUpdate.GfxLegend", function() { 
 		chart.color().domain(chart.data());
 	});
-	chart.dispatch.on("init.repoGfxLegend", function() { 
+	chart.dispatch.on("init.GfxLegend", function() { 
 		bar   = chart.root().append('div').attr('class', 'btn-toolbar').attr('role','toolbar');
 		var l = bar.append('div').attr('class', 'btn-group').attr('role','group').attr('data-toggle','buttons').append('label').attr('class', 'btn btn-default item activated').on('click', function (d){
 				var x=d3.select(this);
@@ -460,7 +460,7 @@ dgc.area.gfxLegend = function() {
 		l.append('input').attr('type', 'checkbox');
 		l.append('i').attr('class', 'fa fa-area-chart')
 	});
-	chart.dispatch.on("renderUpdate.repoGfxLegend", function() {
+	chart.dispatch.on("renderUpdate.GfxLegend", function() {
 		var d = bar.selectAll('div.btn-group.legend').data(chart.data()),
 		    g = d.enter().append('div').attr('class', 'btn-group legend').attr('role','group').attr('data-toggle','buttons');
 		var l = g.append('label').attr('class', function(d){
@@ -587,7 +587,7 @@ dgc.area.gfx = function() {
 	}
 	chart.legend	= function(_) {
 		if (!arguments.length) return legend; legend = _;
-		legend.dispatch.on("area.repoGfxChart", chart.areaSet);
+		legend.dispatch.on("area.GfxChart", chart.areaSet);
 		legend.dispatch.on("enable", chart.colChanged);
 		legend.dispatch.on("select", chart.colChanged);
 		chart.dispatch.on("updateValues.legend", legend.setValues);
@@ -606,29 +606,29 @@ dgc.area.gfx = function() {
 		g.selectAll(".tick:not(:first-of-type) line").attr("stroke-dasharray", "5,5");
 		g.selectAll(".tick text").attr("x", -20);
 	};
-	chart.dispatch.on("widthUpdate.repo.componant.axed", function() {
+	chart.dispatch.on("widthUpdate.dgc.core.axed", function() {
 		w = chart.width()-(margin.left+margin.right+30)
 		xRev.domain([0, w]);
 		chart.xAxis.range([0, w ]);
 	});
-	chart.dispatch.on("heightUpdate.repo.componant.axed", function() {
+	chart.dispatch.on("heightUpdate.dgc.core.axed", function() {
 		h = chart.height()-margin.bottom-margin.top;
 		chart.yAxis.range([h, 0]);
 		if(have_zoom)
 			zoom.translateExtent([[0, 0], [w, h]]).extent([[0, 0], [w, h]])
 	});
-	chart.dispatch.on("dataUpdate.repo.componant.axed", function() {
+	chart.dispatch.on("dataUpdate.dgc.core.axed", function() {
 		domain = d3.extent(chart.data(), function(d) { return d.timestamp; });
 		full_domain = domain;
 		xRev.range(domain);
 		chart.xAxis.domain(domain);
 		chart.lineChanged();
 	});
-	chart.dispatch.on("heightUpdate.repo.componant.axes", function() { 
+	chart.dispatch.on("heightUpdate.dgc.core.axes", function() { 
 		if (chart.inited())
 			chart.root().select(".x.axis").attr("transform", "translate("+margin.left+"," +h+ ")");
 	});
-	chart.dispatch.on("init.repo.componant.axes", function() {
+	chart.dispatch.on("init.dgc.core.axes", function() {
 		var bound	= chart.root().node().getBoundingClientRect();
 		chart.width(bound.width);
 		chart.height(bound.height);chart.dispatch.call("heightUpdate")
@@ -655,7 +655,7 @@ dgc.area.gfx = function() {
 				.call(zoom);
 		}
 	})
-	chart.dispatch.on("updateValues.repoGfxChart", function(v) {
+	chart.dispatch.on("updateValues.GfxChart", function(v) {
 		chart.noDots();
 		if (typeof v == "undefined") return;
 		var dots = legend.cols().map(function(d,i){
@@ -693,7 +693,7 @@ dgc.area.gfx = function() {
 			.style("clip-path","url(#clip)")
 			.style("stroke", function(d) { return legend.colColor(d.id); });
 	}
-	chart.dispatch.on("renderUpdate.repo.componant.axes", function() {
+	chart.dispatch.on("renderUpdate.dgc.core.axes", function() {
 		svg.selectAll(".lines").remove();
 		if (useArea)
 			chart.drawArea();
