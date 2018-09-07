@@ -1,9 +1,9 @@
 (function(global, factory) {
 	if (typeof global.d3 !== 'object' || typeof global.d3.version !== 'string')
-		throw new Error('repo requires d3v4');
+		throw new Error('dgc requires d3v4');
 	var v = global.d3.version.split('.');
 	if (v[0] != '4')
-		throw new Error('repo requires d3v4');
+		throw new Error('dgc requires d3v4');
 	if (typeof global.bs !== 'object' || typeof global.bs.version !== 'string')
 		throw new Error('dgc require d3-Bootstrap');
 	
@@ -33,7 +33,7 @@
 				"shortMonths": ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."]
 	});
 	dgc.core.format.dateAxe	= function(date) {
-		var 	local			= dgc.core.format.locale,
+		var 	locale			= dgc.core.format.locale,
 			formatMillisecond	= locale.format(".%L"),
 			formatSecond		= locale.format(":%S"),
 			formatMinute		= locale.format("%X"),
@@ -172,7 +172,7 @@
 	dgc.core.axes	= function(pClass, pW, pH) {
 		var	chart	= (typeof pClass!="undefined"&&pClass!=null)?pClass:dgc.core.axed(null, pW, pH);
 		chart.xAxisLine		= function(g) {
-			g.call(d3.axisBottom(chart.xAxis).tickFormat(repo.api.format.dateAxe));
+			g.call(d3.axisBottom(chart.xAxis).tickFormat(dgc.core.format.dateAxe));
 			g.select(".domain").remove();
 			g.selectAll(".tick line").attr("stroke", "lightgrey").style("stroke-width", "1.5px");
 		}
