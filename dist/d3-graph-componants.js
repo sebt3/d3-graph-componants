@@ -1,9 +1,9 @@
 (function(global, factory) {
 	if (typeof global.d3 !== 'object' || typeof global.d3.version !== 'string')
-		throw new Error('dgc requires d3v4');
+		throw new Error('dgc requires d3v5');
 	var v = global.d3.version.split('.');
-	if (v[0] != '4')
-		throw new Error('dgc requires d3v4');
+	if (v[0] != '5')
+		throw new Error('dgc requires d3v5');
 	if (typeof global.bs !== 'object' || typeof global.bs.version !== 'string')
 		throw new Error('dgc require d3-Bootstrap');
 	
@@ -86,7 +86,7 @@
 		base.source	= function(_) { 
 			if (arguments.length) {
 				src= _;
-				d3.json(_, function(results) { base.data(results); })
+				d3.json(_).then(function(results) { base.data(results); })
 				return base;
 			}
 			return src;
